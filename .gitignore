@@ -1,0 +1,13 @@
+.direnv/
+.mypy_cache/
+.pytest_cache/
+.ruff_cache/
+.venv
+__pycache__/
+*.egg-info/
+result
+result-*
+scanner-comparison-results/
+
+# Test runs
+tmp*

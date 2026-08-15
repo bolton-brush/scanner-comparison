@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[dependency-groups]
+dev = [
+  "pytest>=8.0,<10.0"
+]
+
+[project]
+name = "scanner-comparison"
+version = "0.1.0"
+description = "Compare duplicate film scans from two digitizers to detect information loss"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "numpy>=2.2",
+  "opencv-python-headless>=4.10",
+  "scikit-image>=0.24"
+]
+
+[project.scripts]
+scanner-compare = "scanner_comparison.cli:main"
+
+[tool.basedpyright]
+extraPaths = ["src"]
+useLibraryCodeForTypes = true
+reportMissingTypeStubs = "none"
+ignore = [
+  "**/typings",
+  "nix/store",
+  ".direnv",
+  "**/tests",
+  "**/.venv"
+]
+exclude = [
+  "**/node_modules",
+  "**/__pycache__",
+  "**/.venv",
+  "**/.*"
+]
+venvPath = "src"
+venv = ".venv"
+
+[tool.pytest.ini_options]
+testpaths = ["src/tests"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+scanner_comparison = ["py.typed"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["scanner_comparison*"]
+exclude = ["tests*"]

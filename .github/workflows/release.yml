@@ -1,0 +1,24 @@
+name: Releases
+on:
+  push:
+    tags:
+      - "R*"
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Nix
+        uses: cachix/install-nix-action@v30
+      - name: Build Project
+        shell: bash
+        run: |
+          nix build --experimental-features "nix-command flakes" .#appimage
+          mv result scanner-compare.AppImage
+      - uses: ncipollo/release-action@v1
+        with:
+          artifacts: "scanner-compare.AppImage"
